@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+        <title>Sudoku</title>
+        <link rel="manifest" href="app.webmanifest">
+
+        <link rel="stylesheet" href="sudoku.css">
+        <script src="sudoku.js"></script>
+    </head>
+
+    <body>
+        <h1>Sudoku</h1>
+        <hr>
+        <h2 id="errors">0</h2>
+
+        <!-- 9x9 board -->
+        <div id="board"></div>
+        <br>
+        <div id="digits">
+        </div>
+        <script>
+            // does the browser support service workers?
+            if ('serviceWorker' in navigator) {
+            // fires when the service worker is ready
+            navigator.serviceWorker.ready.then(reg => {
+                // we have an active service worker working for us
+                console.log(`Service Worker ready (Scope: ${reg.scope})`);
+                // do something interesting, if you want...
+
+            });
+            // then register our service worker
+            navigator.serviceWorker.register('./sw.js', { scope: '/' })
+                .then(function (reg) {
+                // display a success message
+                console.log(`Service Worker Registration (Scope: ${reg.scope})`);
+                })
+                .catch(function (error) {
+                // display an error message
+                console.log(`Service Worker Error (${error})`);
+                });
+            } else {
+            // happens when the app isn't served over a TLS connection (HTTPS)
+            console.warn('Service Worker not available');
+            }
+        </script>
+    </body>
+
+
+</html>
